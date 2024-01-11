@@ -1,6 +1,6 @@
 import { spawn } from 'child_process';
 
-const startPort = 3010;
+const startPort = 3012;
 const endPort = 3015;
 
 let currentPort = startPort;
