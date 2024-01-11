@@ -1,19 +1,30 @@
 import express from 'express';
+import { Server } from 'socket.io';
+import http from 'http';
 import bodyParser from 'body-parser';
 import megaRoutes from './App/Router/megaRoutes.js';
 import debug from 'debug';
 import cluster from 'cluster';
 import os from 'os';
+import cors from 'cors';
 
 const cpus = os.cpus();
 const debugLog = debug('server.js');
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
 app.use(bodyParser.json());
 
+const corsOptions = {
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  origin: '*'
+};
+
+app.use(cors(corsOptions));
 
 app.use('/app', megaRoutes);
 
-const port = 80;
+const port = process.env.PORT || 0;
 
 if (cluster.isPrimary) {
   console.log(`Master ${process.pid} is running`);

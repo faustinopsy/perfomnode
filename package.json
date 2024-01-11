@@ -5,8 +5,8 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node server.js",
-    "dev": "cross-env DEBUG=perfomnode:* && nodemon server.js"
+    "start": "node start-servers.js && sleep 10 && node balanceador.js",
+    "dev": "cross-env DEBUG=perfomnode:* && nodemon start-servers.js"
   },
   "keywords": [],
   "author": "",
@@ -15,9 +15,11 @@
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "socket.io": "^4.7.3"
   },
   "devDependencies": {
+    "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",
     "nodemon": "^3.0.2"
   }
