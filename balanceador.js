@@ -1,7 +1,21 @@
 import http from 'http';
+import https from 'https';
 import express from 'express';
 import cors from 'cors';
-const startPort = 3012;
+import dns from 'dns';
+import dnscache from 'dnscache';
+
+const cachedDns = dnscache({
+    "enable": true,
+    "ttl": 300,
+    "cachesize": 1000
+  });
+dns.lookup = cachedDns.lookup;
+
+const keepAliveAgent = new http.Agent({ keepAlive: true });
+const keepAliveAgentHttps = new https.Agent({ keepAlive: true });
+
+const startPort = 3013;
 const endPort = 3015;
 let currentPort = startPort;
 const app = express();
@@ -30,7 +44,8 @@ const corsOptions = {
         port: currentPort, 
         path: req.url, 
         method: req.method, 
-        headers: req.headers 
+        headers: req.headers,
+        agent: keepAliveAgent
     };
 
     const proxy = http.request(proxyOptions, workerRes => {
