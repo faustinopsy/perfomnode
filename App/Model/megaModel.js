@@ -10,17 +10,14 @@ class Mega {
         this.num6 = num6;
     }
 
-    save() {
-        return new Promise((resolve, reject) => {
-            const query = "INSERT INTO Mega (num1, num2, num3, num4, num5, num6) VALUES (?, ?, ?, ?, ?, ?)";
-            db.query(query, [this.num1, this.num2, this.num3, this.num4, this.num5, this.num6], (error, results, fields) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(results.insertId);
-                }
-            });
-        });
+    async save() {
+        const query = "INSERT INTO Mega (num1, num2, num3, num4, num5, num6) VALUES (?, ?, ?, ?, ?, ?)";
+        try {
+            const result = await db.run(query, [this.num1, this.num2, this.num3, this.num4, this.num5, this.num6]);
+            return result.lastID;
+        } catch (error) {
+            throw error;
+        }
     }
 }
 

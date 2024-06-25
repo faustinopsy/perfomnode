@@ -21,7 +21,6 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
 app.use('/app', megaRoutes);
 
 const port = process.env.PORT || 0;
@@ -36,7 +35,7 @@ if (cluster.isPrimary) {
 
   cluster.on('exit', (worker, code, signal) => {
     console.log(`Worker ${worker.process.pid} died with code: ${code}, and signal: ${signal}`);
-    debconsole.logugLog('Starting a new worker');
+    debugLog('Starting a new worker');
     cluster.fork();
   });
 } else {

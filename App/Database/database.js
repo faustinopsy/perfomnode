@@ -1,15 +1,25 @@
-import mysql from 'mysql';
+import sqlite3 from 'sqlite3';
+import { open } from 'sqlite';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'root123',
-  database: 'a01_teste'
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+const db = await open({
+  filename: join(__dirname, './a01_teste.db'),
+  driver: sqlite3.Database
 });
 
-connection.connect(error => {
-  if (error) throw error;
-  console.log("Conectado ao banco de dados MySQL!");
-});
+await db.exec(`
+  CREATE TABLE IF NOT EXISTS Mega (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    num1 INTEGER,
+    num2 INTEGER,
+    num3 INTEGER,
+    num4 INTEGER,
+    num5 INTEGER,
+    num6 INTEGER
+  )
+`);
 
-export default connection;
+export default db;
