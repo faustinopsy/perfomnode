@@ -31,8 +31,13 @@ Este projeto é uma aplicação Node.js que utiliza SQLite como banco de dados. 
 ```bash
    npm start
 
+```
+abra outro terminal e 
+```bash
+   npm balanceador.js
 
 ```
+
 ## Estrutura do Projeto
 - App/Database: Contém a configuração do banco de dados SQLite.
 - App/Model: Contém o modelo Mega que representa a tabela no banco de dados.

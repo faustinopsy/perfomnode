@@ -18,7 +18,6 @@ router.options('*', cors(corsOptions), (req, res) => {
 
 router.use((req, res, next) => {
   console.log(`Worker ${process.pid} recebendo requisição: ${req.method} ${req.url}`);
-  console.log(res)
   next();
 });
 
