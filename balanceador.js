@@ -50,7 +50,9 @@ const server = http.createServer((req, res) => {
 
   const proxy = http.request(proxyOptions, workerRes => {
     console.log(`Requisição encaminhada com sucesso para a porta ${currentPort}`);
-    workerRes.pipe(res); 
+
+    workerRes.on('data', chunk => res.write(chunk));
+    workerRes.on('end', () => res.end());
   });
 
   proxy.on('error', (err) => {
